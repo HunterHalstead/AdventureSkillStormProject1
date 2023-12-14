@@ -1,16 +1,22 @@
+import java.util.Arrays;
 
 public class Player {
 	private String name;
 	private int hp;
 	private int maxHp;
+	int baseAttackPower = 2;
+	int baseMagicalAttackPower = 2;
+	int charisma = 2;
+	int stamina = 2;
+	int luck = 2;
 	private String[] inventory;
 	private boolean isAlive;
 		
 	
 	public Player() {
 		this.name = "Generic Name";
-		this.hp = 10;
-		this.maxHp = 10;
+		this.maxHp = 20;
+		this.hp = this.maxHp;
 		this.isAlive = true; 
 		this.inventory = new String[1]; //Check array
 	}
@@ -23,14 +29,14 @@ public class Player {
 		this.inventory = new String[1];
 	}
 	
-	public Player(String name, String difficulty) {
+	public Player(String name, String difficulty, int[] arrayOfStats) {
 		this.name = name;
-		switch (difficulty) {
-			case "Hard":
+		switch (difficulty.toLowerCase()) {
+			case "hard":
 				this.maxHp= 5;
 				this.hp = maxHp;
 				break;
-			case "Medium":
+			case "medium":
 				this.maxHp= 10;
 				this.hp = maxHp;
 				break;				
@@ -39,6 +45,13 @@ public class Player {
 				this.hp = maxHp;
 				break;
 		}
+		this.baseAttackPower = arrayOfStats[0];
+		this.baseMagicalAttackPower = arrayOfStats[1];
+		this.charisma = arrayOfStats[2];
+		this.stamina = arrayOfStats[3];
+		this.luck = arrayOfStats[4];
+		this.isAlive = true; 
+		this.inventory = new String[1];
 	}
 
 	public Player(String name, int hp, String[] inventory, int maxHp) {
@@ -46,6 +59,18 @@ public class Player {
 		this.hp = hp;
 		this.maxHp= maxHp;
 		this.inventory = inventory;
+	}
+
+	@Override
+	public String toString() {
+		return "\nPlayer Name = " + name + "\nHP = " + hp + "/" + maxHp + 
+				"\nAttack = " + baseAttackPower + 
+				"\nMagic = " + baseMagicalAttackPower + 
+				"\nCharisma = " + charisma + 
+				"\nStamina = " + stamina + 
+				"\nLuck = " + luck + 
+				"\ninventory = " + Arrays.toString(inventory) + 
+				"\nisAlive = " + isAlive;
 	}
 
 }
