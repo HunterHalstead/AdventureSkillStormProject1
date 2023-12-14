@@ -7,9 +7,14 @@ public class GameMain {
 		Player playerCharacter = createNewPlayer();
 		System.out.println(playerCharacter);
 		
-		Room testRoom = new Room(playerCharacter);
-//		testRoom.rewardPlayer();
-//		System.out.println(playerCharacter);
+		Scene testScene = new Scene();
+		testScene.setPlayer(playerCharacter);
+		testScene.rewardPlayer();
+		System.out.println(playerCharacter);
+		MonsterScene testScene2 = new MonsterScene();
+		testScene2.rewardPlayer();
+		System.out.println(playerCharacter);
+		
 		
 	}
 
@@ -37,7 +42,7 @@ public class GameMain {
 		difficulty = keyB.nextLine();
 		
 		while (remainingStatPoints > 0) {
-			System.out.println("Your current stats are:"
+			System.out.println("Your current adjustable stats are:"
 					+ "\nAttack Power - " + baseAttackPower
 					+ "\nMagical Attack Power - " + baseMagicalAttackPower
 					+ "\nCharisma - " + charisma
@@ -59,9 +64,9 @@ public class GameMain {
 				keyB.nextLine();
 			}
 			
-			while(remainingStatPoints > 0) {
+			while(remainingStatPoints > 0   && statChoice.contains("ran")) {
 				randomStatChoice = (int) ((Math.random() * 5) + 1);
-				System.out.println(randomStatChoice);
+//				System.out.println(randomStatChoice);
 				switch(randomStatChoice) {
 					case 1:
 						baseAttackPower++;
