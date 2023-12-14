@@ -6,6 +6,11 @@ public class GameMain {
 		System.out.println("Welcome to a Roguelike Text Adventure Game");
 		Player playerCharacter = createNewPlayer();
 		System.out.println(playerCharacter);
+		
+		Room testRoom = new Room(playerCharacter);
+//		testRoom.rewardPlayer();
+//		System.out.println(playerCharacter);
+		
 	}
 
 	public static Player createNewPlayer() {
@@ -19,7 +24,8 @@ public class GameMain {
 		int charisma = 2;
 		int stamina = 2;
 		int luck = 2;
-		int statIntChoice = -1; 
+		int statIntChoice = -1;
+		int randomStatChoice = 0;
 		int remainingStatPoints = 10;
 		int[] arrayOfStats = new int[5];
 		
@@ -41,17 +47,45 @@ public class GameMain {
 			System.out.println("You have " + remainingStatPoints + " stat points to augment those stats.");
 			
 			while (!statChoice.contains("att") && !statChoice.contains("mag") && 
-					!statChoice.contains("char") && !statChoice.contains("stam") && !statChoice.contains("luc")) {
-				System.out.println("Which stat do you want to increase? Att/Mag/Char/Sta/Luc");
+					!statChoice.contains("cha") && !statChoice.contains("sta") && !statChoice.contains("luc") && !statChoice.contains("ran")) {
+				System.out.println("Which stat do you want to increase? Att/Mag/Char/Sta/Luc/Random");
 				statChoice = keyB.nextLine().toLowerCase();		
 			}
 			statChoice = statChoice.toLowerCase();
 			
-			while (statIntChoice < 0 || statIntChoice > 10) {
+			while ((statIntChoice < 0 || statIntChoice > 10) && !statChoice.contains("ran")) {
 				System.out.println("How many points do you want to spend?");
 				statIntChoice = keyB.nextInt();
 				keyB.nextLine();
-			}			
+			}
+			
+			while(remainingStatPoints > 0) {
+				randomStatChoice = (int) ((Math.random() * 5) + 1);
+				System.out.println(randomStatChoice);
+				switch(randomStatChoice) {
+					case 1:
+						baseAttackPower++;
+						remainingStatPoints--;
+						break;
+					case 2:
+						baseMagicalAttackPower++;
+						remainingStatPoints--;
+						break;
+					case 3:
+						charisma++;
+						remainingStatPoints--;
+						break;
+					case 4:
+						stamina++;
+						remainingStatPoints--;
+						break;
+					case 5:
+						luck++;
+						remainingStatPoints--;
+						break;
+				}
+				statIntChoice = 0;
+			}
 			
 			remainingStatPoints -= statIntChoice;
 			if (statChoice.contains("att") && !statChoice.contains("mag")) {
@@ -60,7 +94,7 @@ public class GameMain {
 			else if (statChoice.contains("mag")) {
 				baseMagicalAttackPower += statIntChoice;				
 			}
-			else if (statChoice.contains("char")) {
+			else if (statChoice.contains("cha")) {
 				charisma += statIntChoice;				
 			}
 			else if (statChoice.contains("sta")) {
@@ -73,12 +107,12 @@ public class GameMain {
 			statIntChoice = -1;			
 			statChoice = "none";			
 		}
-		System.out.println("Your current stats are:"
-				+ "\nAttack Power - " + baseAttackPower
-				+ "\nMagical Attack Power - " + baseMagicalAttackPower
-				+ "\nCharisma - " + charisma
-				+ "\nStamina - " + stamina
-				+ "\nLuck - " + luck);
+//		System.out.println("Your current stats are:"
+//				+ "\nAttack Power - " + baseAttackPower
+//				+ "\nMagical Attack Power - " + baseMagicalAttackPower
+//				+ "\nCharisma - " + charisma
+//				+ "\nStamina - " + stamina
+//				+ "\nLuck - " + luck);
 
 		arrayOfStats = new int[] {baseAttackPower, baseMagicalAttackPower, charisma, stamina, luck};
 		newPlayer = new Player(name, difficulty, arrayOfStats);
