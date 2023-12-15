@@ -8,7 +8,7 @@ public class GameMain {
 		int numberOfScenesToWin = 10;
 		int currentScenarioNum = 1;
 		ArrayList<Scene> arrayOfScenes = new ArrayList<Scene>();
-		System.out.println("Welcome to a Roguelike Text Adventure Game");
+		System.out.println("Welcome to a Text Adventure Game");
 		Player playerCharacter = createNewPlayer();
 		System.out.println(playerCharacter);
 		
@@ -24,8 +24,6 @@ public class GameMain {
 		}
 		
 		System.out.println("You did it!!! Congratulations");
-//		testScene2.playScene();
-//		System.out.println(playerCharacter);
 		
 		
 	}
@@ -41,10 +39,10 @@ public class GameMain {
 						arrayOfScenes.add(new MonsterScene());
 						break;
 					case 2:
-						arrayOfScenes.add(new MonsterScene());
+						arrayOfScenes.add(new TreasureScene());
 						break;
 					case 3:
-						arrayOfScenes.add(new MonsterScene());
+						arrayOfScenes.add(new ShopScene());
 						break;
 					case 4:
 						arrayOfScenes.add(new MonsterScene());
@@ -55,6 +53,7 @@ public class GameMain {
 				}
 			}
 			while(arrayOfScenes.size() < numberOfScenesToWin);
+		arrayOfScenes.add(new BossMonsterScene());	
 		return arrayOfScenes;
 	}
 
@@ -94,9 +93,9 @@ public class GameMain {
 					);
 			System.out.println("You have " + remainingStatPoints + " stat points to augment those stats.");
 			
-			while (!statChoice.contains("att") && !statChoice.contains("mag") && 
+			while (!statChoice.contains("phy") && !statChoice.contains("mag") && 
 					!statChoice.contains("cha") && !statChoice.contains("sta") && !statChoice.contains("luc") && !statChoice.contains("ran")) {
-				System.out.println("Which stat do you want to increase? Att/Mag/Char/Sta/Luc/Random");
+				System.out.println("Which stat do you want to increase? PHYSICAL/MAGIC/CHARISMA/STAMINA/LUCK/RANDOM");
 				statChoice = keyB.nextLine().toLowerCase();		
 			}
 			statChoice = statChoice.toLowerCase();
@@ -136,7 +135,7 @@ public class GameMain {
 			}
 			
 			remainingStatPoints -= statIntChoice;
-			if (statChoice.contains("att") && !statChoice.contains("mag")) {
+			if (statChoice.contains("phy") && !statChoice.contains("mag")) {
 				baseAttackPower += statIntChoice;				
 			}
 			else if (statChoice.contains("mag")) {

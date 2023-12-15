@@ -7,10 +7,11 @@ public class Scene {
 	}
 	
 	public void rewardPlayer() {
+		int coinsFound = 3;
 		System.out.println("A glint flashes on the ground...");
 		System.out.println("You reach down to pick it up...");
-		System.out.println("It's a single coin.");
-		int coinsAfterReward = (Scene.player.getCoins() + 1);
+		System.out.printf("It's %d coin.\n", coinsFound);
+		int coinsAfterReward = (Scene.player.getCoins() + coinsFound);
 		Scene.player.setCoins(coinsAfterReward);
 	}
 

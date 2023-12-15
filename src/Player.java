@@ -12,7 +12,7 @@ public class Player {
 	private int luck = 2;
 	private int sumOfEquipmentDefense = 0;
 	private int tempDefense = 0;	
-	private int coins = 0;
+	private int coins = 3;
 	private String[] inventory;
 	private boolean isAlive;
 		
@@ -69,8 +69,8 @@ public class Player {
 	@Override
 	public String toString() {
 		return "\nPlayer Name = " + name + "\nHP = " + hp + "/" + maxHp + 
-				"\nAttack = " + baseAttackPower + 
-				"\nMagic = " + baseMagicalAttackPower + 
+				"\nPhysical Attack = " + baseAttackPower + 
+				"\nMagical Attack = " + baseMagicalAttackPower + 
 				"\nCharisma = " + charisma + 
 				"\nStamina = " + stamina + 
 				"\nLuck = " + luck + 
@@ -138,11 +138,11 @@ public class Player {
 	public void healHp(int healAmount) {
 		if(this.hp + healAmount > this.maxHp) {
 			this.hp = this.maxHp;
-			System.out.println("You fully healed!");
+			System.out.println("\nYou fully healed!\n");
 		}
 		else {
 			this.hp += healAmount;
-			System.out.printf("You healed bt %d.\n", healAmount);
+			System.out.printf("\nYou healed by %d.\n", healAmount);
 		}
 	}
 	
@@ -216,14 +216,14 @@ public class Player {
 		}
 		if (this.getUsedStamina() > this.getStamina()) {
 			this.setUsedStamina(0);
-			System.out.println("You have no stamina");
+			System.out.println("You have no stamina\n");
 		}
 	}
 	
 	public void incrementStamina(int staminagained) {
 		if((this.getUsedStamina() + staminagained) > this.stamina) {
 			this.setUsedStamina(this.stamina);
-			System.out.println("You have full stamina");
+			System.out.println("You have full stamina\n");
 		}
 		else {
 			this.setUsedStamina(this.getUsedStamina() + staminagained);

@@ -1,15 +1,15 @@
 import java.util.Scanner;
 
 public class MonsterScene extends Scene {
-	private String monsterSpecies = "random office worker";
-	private String monsterBlurb = "walks in with a confused look, but hostility clouds his gaze and he attacks";
-	private String monsterPrefix = "A weak ";
-	private int monsterBaseStrength = 5;
-	private int monsterMaxHp = 10;
-	private int monsterCurrentHp = monsterMaxHp;
-	private int physicalDefence = 2;
-	private int magicalDefence = 0;
-	private boolean sceneIsActive = true;
+	protected String monsterSpecies = "random office worker";
+	protected String monsterBlurb = "walks in with a confused look, but hostility clouds his gaze and he attacks";
+	protected String monsterPrefix = "A weak ";
+	protected int monsterBaseStrength = 5;
+	protected int monsterMaxHp = 10;
+	protected int monsterCurrentHp = monsterMaxHp;
+	protected int physicalDefence = 2;
+	protected int magicalDefence = 0;
+	protected boolean sceneIsActive = true;
 //	public static Scanner keyB = new Scanner(System.in);
 
 	public MonsterScene() {
@@ -41,10 +41,18 @@ public class MonsterScene extends Scene {
 		Scene.player.gainRandomStat();
 		Scene.player.endOfBattleHeal();
 		Scene.player.setUsedStamina(Scene.player.getStamina());
-		System.out.println("You gained a random stat point");
+		System.out.println("You gained a random stat point\n");
+		rewardPlayer();
 		System.out.println(player);
 
 //		keyB.close();
+	}
+	
+	public void rewardPlayer() {
+		int coinsFound = 1;
+		System.out.printf("You found %d coin.\n", coinsFound);
+		int coinsAfterReward = (Scene.player.getCoins() + coinsFound);
+		Scene.player.setCoins(coinsAfterReward);
 	}
 
 	public void randomizeMonster() {
@@ -117,7 +125,8 @@ public class MonsterScene extends Scene {
 			System.out.printf("Your Stamina: %d/%d  Your HP: %d/%d\n", Scene.player.getUsedStamina(), Scene.player.getStamina(),
 															 Scene.player.getHp(), Scene.player.getMaxHp());
 			System.out.println("Do you want to ATTACK? (You must have 2 stamina to spend)\n"
-							 + "Do you want to DEFEND? (You will gain 2 temp defense and 3 stamina)");
+							 + "Do you want to DEFEND? (You will gain 2 temp defense and 3 stamina)\n"
+							 + "Do you want to SUPPRESS? (Charisma needs to be high enough and Enemy Health low enough)\n");
 			String action = keyB.nextLine();
 			if (action.contains("att")) {
 				attackMonster(keyB);
@@ -129,8 +138,22 @@ public class MonsterScene extends Scene {
 				Scene.player.incrementStamina(3);
 				choiceIsPending = false;
 			}
+			else if (action.contains("sup")) {
+				suppress();
+				choiceIsPending = false;
+			}
 		}
 //		keyB.close();
+	}
+
+	private void suppress() {
+		if ((player.getCharisma() > 5) && (monsterCurrentHp * 3) < monsterMaxHp) {
+			monsterCurrentHp = 0;
+			System.out.println("\nYou suppressed the %s.\n");
+		}
+		else {
+			System.out.println("\nIt didn't work");
+		}
 	}
 
 	public void attackMonster(Scanner keyB) {
