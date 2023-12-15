@@ -1,22 +1,64 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class GameMain {
 
 	public static void main(String[] args) {
+//		Scanner keyB = new Scanner(System.in);
+		int numberOfScenesToWin = 10;
+		int currentScenarioNum = 1;
+		ArrayList<Scene> arrayOfScenes = new ArrayList<Scene>();
 		System.out.println("Welcome to a Roguelike Text Adventure Game");
 		Player playerCharacter = createNewPlayer();
 		System.out.println(playerCharacter);
 		
-		Scene testScene = new Scene();
-		testScene.setPlayer(playerCharacter);
-		testScene.rewardPlayer();
-		System.out.println(playerCharacter);
-		MonsterScene testScene2 = new MonsterScene();
-		testScene2.rewardPlayer();
-		System.out.println(playerCharacter);
+		Scene urScene = new Scene();
+		urScene.setPlayer(playerCharacter);
+		
+		arrayOfScenes = craftJourney(arrayOfScenes, numberOfScenesToWin);
+		for(Scene currentScene : arrayOfScenes) {
+			System.out.printf("\nScenario: %d", currentScenarioNum);
+			currentScene.playScene();
+			currentScenarioNum++;
+			System.out.println("\n");
+		}
+		
+		System.out.println("You did it!!! Congratulations");
+//		testScene2.playScene();
+//		System.out.println(playerCharacter);
 		
 		
 	}
+
+	
+
+	private static ArrayList<Scene> craftJourney(ArrayList<Scene> arrayOfScenes, int numberOfScenesToWin) {
+		int randomSceneChoice = 0;
+			do {
+				randomSceneChoice = (int) ((Math.random() * 5) + 1);
+				switch(randomSceneChoice) {
+					case 1:
+						arrayOfScenes.add(new MonsterScene());
+						break;
+					case 2:
+						arrayOfScenes.add(new MonsterScene());
+						break;
+					case 3:
+						arrayOfScenes.add(new MonsterScene());
+						break;
+					case 4:
+						arrayOfScenes.add(new MonsterScene());
+						break;
+					case 5:
+						arrayOfScenes.add(new MonsterScene());
+						break;
+				}
+			}
+			while(arrayOfScenes.size() < numberOfScenesToWin);
+		return arrayOfScenes;
+	}
+
+
 
 	public static Player createNewPlayer() {
 		Scanner keyB = new Scanner(System.in);
@@ -40,6 +82,7 @@ public class GameMain {
 		
 		System.out.println("Do you want to play on Easy/Medium/Hard? (This changes starting health)");
 		difficulty = keyB.nextLine();
+		difficulty = difficulty.toLowerCase();		
 		
 		while (remainingStatPoints > 0) {
 			System.out.println("Your current adjustable stats are:"
@@ -123,7 +166,7 @@ public class GameMain {
 		newPlayer = new Player(name, difficulty, arrayOfStats);
 		
 		
-		keyB.close();
+//		keyB.close();
 		return newPlayer;
 	}
 }
